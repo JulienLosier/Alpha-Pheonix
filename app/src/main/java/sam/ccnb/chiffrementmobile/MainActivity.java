@@ -1,3 +1,10 @@
+/*  Programmeur: Samuel Lavoie, Jean-Philippe Haché
+    Date:   Avril, 2015
+
+    Dernière mise a jour;
+        - (Samuel Lavoie, 28 Avril, 2015) implémentation du JAR (pour l'API du chifremment)
+ */
+
 package sam.ccnb.chiffrementmobile;
 
 import android.support.v7.app.ActionBarActivity;
