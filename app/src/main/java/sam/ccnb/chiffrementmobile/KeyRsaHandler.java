@@ -71,7 +71,6 @@ public class KeyRsaHandler {
             generateKey();
 
         loadKeys();
-        Log.d( TAG, "Loaded keys.");
     }
 
     /**
@@ -85,7 +84,7 @@ public class KeyRsaHandler {
      */
     private void generateKey() {
         try {
-            Log.d( TAG, "Generating keys.");
+            Log.d( TAG, "Generation des clées");
             final KeyPairGenerator keyGen = KeyPairGenerator.getInstance( _ALGORITHM );
             keyGen.initialize( _STRENGTH );
             final KeyPair key = keyGen.generateKeyPair();
@@ -98,12 +97,12 @@ public class KeyRsaHandler {
             if ( privateKeyFile.getParentFile() != null )
                 privateKeyFile.getParentFile().mkdirs();
             privateKeyFile.createNewFile();
-            Log.d( TAG, "Public key created.");
+            Log.d( TAG, "Public key crée.");
 
             if ( publicKeyFile.getParentFile() != null )
                 publicKeyFile.getParentFile().mkdirs();
             publicKeyFile.createNewFile();
-            Log.d( TAG, "Private key created.");
+            Log.d( TAG, "Private key crée");
 
             // Enregistre la cle public dans un fichier
             ObjectOutputStream publicKeyOS = new ObjectOutputStream(
@@ -111,7 +110,7 @@ public class KeyRsaHandler {
             );
             publicKeyOS.writeObject( key.getPublic() );
             publicKeyOS.close();
-            Log.d( TAG, "Public key writen in memory.");
+            Log.d( TAG, "Public key est dans la memoire.");
             /////////////////////////////////////////////////////////
             // Enregistre la cle prive dans un fichier
             ObjectOutputStream privateKeyOS = new ObjectOutputStream(
@@ -119,7 +118,7 @@ public class KeyRsaHandler {
             );
             privateKeyOS.writeObject( key.getPrivate() );
             privateKeyOS.close();
-            Log.d( TAG, "Private key writen in memory.");
+            Log.d( TAG, "Private key est dans la memoire.");
 
         } catch ( Exception e ) { e.printStackTrace(); }
     }
@@ -134,7 +133,8 @@ public class KeyRsaHandler {
 
         //Load les cles en memoire
         try {
-            Log.d( TAG, "Attempt to load keys ... from " + ctx.getFilesDir() +"/"+ pubKeyPath);
+            Log.d( TAG, "Attempt to load keys ... " );
+            Log.d( TAG, ctx.getFilesDir() +"/"+ pubKeyPath);
 
             inpStrm = new ObjectInputStream(
                     new FileInputStream( ctx.getFilesDir()+"/"+ pubKeyPath ));
@@ -144,12 +144,13 @@ public class KeyRsaHandler {
             inpStrm.close(); //BUG FIX: broken pipe, don't touch
             ///////////////////
 
+            Log.d( TAG, ctx.getFilesDir() +"/"+ priKeyPath);
             inpStrm = new ObjectInputStream(
-                    new FileInputStream( ctx.getFilesDir()+priKeyPath ));
+                    new FileInputStream( ctx.getFilesDir()+"/"+priKeyPath ));
             priKey = (PrivateKey) inpStrm.readObject();
 
             inpStrm.close();
-            Log.d( TAG, "Loaded keys from memory.");
+            Log.d( TAG, "Loaded keys from internal memory.");
         }
         catch (FileNotFoundException e) 	{ e.printStackTrace(); }
         catch (IOException e) 			    { e.printStackTrace(); }
@@ -164,11 +165,13 @@ public class KeyRsaHandler {
      */
     private boolean areKeysPresent() {
 
-        File privateKey = new File( priKeyPath );
-        File publicKey  = new File( pubKeyPath );
+        File privateKey = new File( ctx.getFilesDir(), priKeyPath );
+        File publicKey  = new File( ctx.getFilesDir(), pubKeyPath );
 
-        if ( privateKey.exists() && publicKey.exists() )
+        if ( privateKey.exists() && publicKey.exists() ) {
+            Log.d( TAG, "Clé déja existente. Skip!");
             return true;
+        }
 
         return false;
     }

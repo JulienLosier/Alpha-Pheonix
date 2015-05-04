@@ -40,6 +40,7 @@ public class MainActivity extends ActionBarActivity {
                 TextView output = (TextView) findViewById(R.id.outputTextView);
                 EditText nomEdTxt = (EditText) findViewById(R.id.nomEditText);
                 EditText msgEdTxt = (EditText) findViewById(R.id.msgEditText);
+                TextView reMsgTxt = (TextView) findViewById(R.id.dechiffrementTextView);
                 String nom, msg;
 
                 //Placer les values des Textfields dans un string
@@ -55,7 +56,11 @@ public class MainActivity extends ActionBarActivity {
 
                 //afficher le message brut
                 String buffer = new String( chiMsg );
-                output.setText( "Verify log." ); //new String(chiMsg)
+                output.setText( buffer ); //new String(chiMsg)
+
+                //Dechifremment du message
+                String dechMsg = ChiffrementHandler.decrypt( chiMsg, kh.getPriKey() );
+                reMsgTxt.setText( dechMsg );
             }
         });
     }
