@@ -11,14 +11,32 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements View.OnClickListener{
+
+    private Button sendButton;
+    private TextView receiverTextView;
+    private TextView output;
+    private EditText sent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        receiverTextView = (TextView) findViewById(R.id.receiverNameTextView);
+        output = (TextView) findViewById(R.id.outputTextView);
+
+        sent = (EditText) findViewById(R.id.sendEditText);
+
+        sendButton = (Button) findViewById(R.id.sendButton);
+        sendButton.setOnClickListener(this);
+
     }
 
 
@@ -26,6 +44,9 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+
+
         return true;
     }
 
@@ -42,5 +63,22 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        byte[] message = null;
+        String received = null;
+
+        KeyRsaHandler key = new KeyRsaHandler(1); //temporaire 
+
+        ChiffrementHandler chiffrement = new ChiffrementHandler();
+
+        message = chiffrement.encrypt(sent.getText().toString(),key.getPubKey());
+
+        received = chiffrement.decrypt(message,key.getPriKey());
+
+        output.setText(received);
     }
 }
