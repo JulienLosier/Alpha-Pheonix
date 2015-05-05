@@ -1,8 +1,20 @@
 <resources>
 
+    <!--  Programmeur: Julien Guy Losier, Benjamin Lanteigne
+    Date:   Avril, 2015
+
+    Dernière mise a jour;
+    - (Julien Guy Losier, 5 mai, 2015) Ajout du style CodeFont pour modifier les couleurs du text dans le listView
+    -->
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="CodeFont" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:typeface">monospace</item>
     </style>
 
 </resources>

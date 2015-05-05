@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--  Programmeur: Julien Guy Losier, Benjamin Lanteigne
+    Date:   Avril, 2015
+
+    Dernière mise a jour;
+    - (Julien Guy Losier, 5 mai, 2015) Création de l'interface affichant les clients
+    - (Benjamin Lanteigne, 5 mai 2015) aide
+    -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#ff000000">
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/clientIDListView"
+        style="@style/CodeFont"/>
+</LinearLayout>
