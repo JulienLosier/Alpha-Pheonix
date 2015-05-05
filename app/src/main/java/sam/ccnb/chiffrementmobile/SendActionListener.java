@@ -47,7 +47,7 @@ public class SendActionListener extends ActionBarActivity implements View.OnClic
         String received = null;
 
         //loader le KeyHandler
-        KeyRsaHandler key = new KeyRsaHandler(nom.hashCode());
+        KeyRsaHandler key = new KeyRsaHandler(nom.hashCode(), getApplicationContext());
 
         //chiffrer le message, retourne un array de char
         chiMessage = ChiffrementHandler.encrypt(msg, key.getPubKey());
