@@ -16,23 +16,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import sam.ccnb.chiffrementmobile.KeyRsaHandler;
+import sam.ccnb.chiffrementmobile.ChiffrementHandler;
+
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener{
 
     private Button sendButton;
-    private TextView receiverTextView;
+    private TextView receiver;
     private TextView output;
-    private EditText sent;
+    private EditText message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        receiverTextView = (TextView) findViewById(R.id.receiverNameTextView);
+        receiver = (TextView) findViewById(R.id.receiverNameTextView);
         output = (TextView) findViewById(R.id.outputTextView);
 
-        sent = (EditText) findViewById(R.id.sendEditText);
+        message = (EditText) findViewById(R.id.sendEditText);
 
         sendButton = (Button) findViewById(R.id.sendButton);
         sendButton.setOnClickListener(this);
@@ -68,17 +71,31 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
-        byte[] message = null;
+        String nom, msg;
+
+        //Placer les values des Textfields dans un string
+        nom = receiver.getText().toString();
+        msg = message.getText().toString();
+
+        //Dechifremment du message
+        //String dechMsg = ChiffrementHandler.decrypt( chiMsg, kh.getPriKey() );
+        //reMsgTxt.setText( dechMsg );
+
+        byte[] chiMessage = null;
         String received = null;
 
-        KeyRsaHandler key = new KeyRsaHandler(1); //temporaire 
+        //loader le KeyHandler
+        KeyRsaHandler key = new KeyRsaHandler(nom.hashCode());
 
-        ChiffrementHandler chiffrement = new ChiffrementHandler();
+        //chiffrer le message, retourne un array de char
+        chiMessage = ChiffrementHandler.encrypt(msg, key.getPubKey());
 
-        message = chiffrement.encrypt(sent.getText().toString(),key.getPubKey());
+        //afficher le message brut
+        String bufferString = new String( chiMessage );
+        output.setText("Message brut: " + bufferString);
 
-        received = chiffrement.decrypt(message,key.getPriKey());
-
-        output.setText(received);
+        //Dechifremment du message
+        received = ChiffrementHandler.decrypt(chiMessage, key.getPriKey());
+        output.append(" Message Decrypter: " + received);
     }
 }
