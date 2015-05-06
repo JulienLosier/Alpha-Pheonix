@@ -16,28 +16,21 @@ import sam.ccnb.chiffrementmobile.ChiffrementHandler;
 
 public class SendActionListener extends ActionBarActivity implements View.OnClickListener{
 
-    private Button sendButton;
-    private TextView receiver;
-    private TextView output;
-    private EditText message;
+    private MainActivity win;
 
-    public SendActionListener() {
-        receiver = (TextView) findViewById(R.id.receiverNameTextView);
-        output = (TextView) findViewById(R.id.outputTextView);
+    public SendActionListener(MainActivity win) {
 
-        message = (EditText) findViewById(R.id.sendEditText);
-
-        sendButton = (Button) findViewById(R.id.sendButton);
-        sendButton.setOnClickListener(this);
+        this.win = win;
     }
+
     @Override
     public void onClick(View v) {
 
         String nom, msg;
 
         //Placer les values des Textfields dans un string
-        nom = receiver.getText().toString();
-        msg = message.getText().toString();
+        nom = win.getReceiver().getText().toString();   //receiver.getText().toString();
+        msg = win.getMessage().getText().toString();  //message.getText().toString();
 
         //Dechifremment du message
         //String dechMsg = ChiffrementHandler.decrypt( chiMsg, kh.getPriKey() );
@@ -47,17 +40,17 @@ public class SendActionListener extends ActionBarActivity implements View.OnClic
         String received = null;
 
         //loader le KeyHandler
-        KeyRsaHandler key = new KeyRsaHandler(nom.hashCode(), getApplicationContext());
+        KeyRsaHandler key = new KeyRsaHandler(nom.hashCode(), win.getApplicationContext());
 
         //chiffrer le message, retourne un array de char
         chiMessage = ChiffrementHandler.encrypt(msg, key.getPubKey());
 
         //afficher le message brut
         String bufferString = new String( chiMessage );
-        output.setText("Message brut: " + bufferString);
+        win.getOutput().setText("Message brut: " + bufferString);
 
         //Dechifremment du message
         received = ChiffrementHandler.decrypt(chiMessage, key.getPriKey());
-        output.append(" Message Decrypter: " + received);
+        win.getOutput().append(" Message Decrypter: " + received);
     }
 }

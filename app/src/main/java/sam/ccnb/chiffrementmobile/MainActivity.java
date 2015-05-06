@@ -14,13 +14,31 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity{
+
+    private Button sendButton;
+    private TextView receiver;
+    private TextView output;
+    private EditText message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layouthomepage);
+        setContentView(R.layout.activity_main);
+
+        receiver = (TextView) findViewById(R.id.receiverNameTextView);
+        output = (TextView) findViewById(R.id.outputTextView);
+        message = (EditText) findViewById(R.id.sendEditText);
+
+        SendActionListener listener = new SendActionListener(this);
+
+        sendButton = (Button) findViewById(R.id.sendButton);
+        sendButton.setOnClickListener(listener);
     }
 
     @Override
@@ -45,6 +63,16 @@ public class MainActivity extends ActionBarActivity{
         return super.onOptionsItemSelected(item);
     }
 
+    public TextView getReceiver() {
+        return receiver;
+    }
 
+    public TextView getOutput() {
+        return output;
+    }
+
+    public EditText getMessage() {
+        return message;
+    }
 }
 
