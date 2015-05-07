@@ -101,4 +101,15 @@
         android:layout_alignEnd="@+id/outputTextView"
         android:layout_above="@+id/outputTextView" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/clientSelectButton"
+        android:layout_alignTop="@+id/logoImageView"
+        android:layout_alignRight="@+id/receiverNameTextView"
+        android:layout_alignEnd="@+id/receiverNameTextView"
+        android:background="#4dffffff"
+        android:textColor="#fff7ffef" />
+
 </RelativeLayout>

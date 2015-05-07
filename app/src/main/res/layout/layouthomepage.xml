@@ -7,7 +7,7 @@
     - (Benjamin Lanteigne, 5 mai 2015) aide
     -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="#ff000000">
 
@@ -15,5 +15,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/clientIDListView"
-        style="@style/CodeFont"/>
-</LinearLayout>
+        style="@style/CodeFont"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add new client"
+        android:id="@+id/clientAddButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="#4dffffff"
+        android:textColor="#fff7ffef" />
+</RelativeLayout>
